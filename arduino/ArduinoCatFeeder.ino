@@ -60,49 +60,7 @@ void setup()
   
 } 
  
- 
-void loop() 
-{
-  RTC.getTime();
-  String stringNow = getNow();
-  
-  if(fedToday)
-  {
-    if(stringNow == feedReset)
-    {
-      fedToday = false;
-      lcd.clear();
-      lcd.setCursor(0,0);
-      lcd.print("see you");
-      lcd.setCursor(0,1);
-      lcd.print("tomorrow");
-      delay(2000);
-    }
-    lcd.clear();
-    lcd.setCursor(0,0);
-    lcd.print("cat food");
-    lcd.setCursor(0,1);
-    lcd.print("ready!");
-    delay(2000);
-  }
-  else
-  {
-   //check time and feed 
-   if(stringNow == feedTime)
-   {
-     fedToday = true;
-     feed();
-   } 
-  }
-  
-  if(millis() - timeSinceChangedLCD > 3000) {
-    printLCD();
-    timeSinceChangedLCD = millis();
-  }
-    
-  //delay(5000);
-}
-
+//DECLARE METHODS 
 void feed()
 {
   lcd.clear();
@@ -287,4 +245,47 @@ void processCommand() {
     }
     servoTilt.write(currentTilt);
   }
+}
+
+//LOOP
+void loop() 
+{
+  RTC.getTime();
+  String stringNow = getNow();
+  
+  if(fedToday)
+  {
+    if(stringNow == feedReset)
+    {
+      fedToday = false;
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("see you");
+      lcd.setCursor(0,1);
+      lcd.print("tomorrow");
+      delay(2000);
+    }
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("cat food");
+    lcd.setCursor(0,1);
+    lcd.print("ready!");
+    delay(2000);
+  }
+  else
+  {
+   //check time and feed 
+   if(stringNow == feedTime)
+   {
+     fedToday = true;
+     feed();
+   } 
+  }
+  
+  if(millis() - timeSinceChangedLCD > 3000) {
+    printLCD();
+    timeSinceChangedLCD = millis();
+  }
+    
+  //delay(5000);
 }
