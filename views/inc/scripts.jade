@@ -1,0 +1,18 @@
+script(type='text/javascript', src='/js/jquery-1.8.2.min.js')
+script(type='text/javascript', src='/js/bootstrap.min.js')
+script(type='text/javascript')
+	alerts = function(){};
+	alerts.error = function(message){
+		if($('#alerts'))
+		{
+			$('#alerts').html("<div class='alert alert-error fade in' onclick='$(\".alert\").alert(\"close\");'><button type='button' class='close' data-dismiss='alert'>×</button>"+message+"</div>");
+			
+		}
+	}
+
+	alerts.info = function(message){
+		if($('#alerts')){
+			$('#alerts').html("<div class='alert alert-info fade in' onclick='$(\".alert\").alert(\"close\");'><button type='button' class='close' data-dismiss='alert'>×</button>"+message+"</div>");
+		}
+	}
+

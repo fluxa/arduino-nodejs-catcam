@@ -1,0 +1,24 @@
+!!! 5
+html(lang='en',manifest='/cache.manifest')
+	head
+		title #{title}
+		include inc/style
+	body
+		div#alerts
+		div#wrap
+			div.container
+				div.page-header
+					h1 #{title}
+					p.lead data will be sent via socket to node.js server then via serial to arduino
+
+				div#push
+					div.container
+						p
+							input(type='text')#data
+						p
+							a.btn.btn-primary(onclick='onSendButton();') send
+						
+		include inc/footer
+		include inc/scripts
+		include inc/scripts_index
+
