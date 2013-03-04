@@ -152,43 +152,7 @@ void printLCD()
   showCurrent = !showCurrent;
 }
 
-
-// Serial instruction
-// protocol: cmd -> 1 byte | arg -> 3 bytes | '\n' -> 1byte = 5 bytes
-boolean processcmd = false;
-boolean parsecmd;
-char cmd;
-char arg[4];
-int cmdArg;
-
-void serialEvent() {
-  
-  if( Serial.available() >= 5) {
-    cmd = Serial.read();
-    arg[0] = (char)Serial.read();
-    arg[1] = (char)Serial.read();
-    arg[2] = (char)Serial.read();
-    arg[3] = '\0';
-    if(Serial.read() == '\n') {
-      parsecmd = true;
-    }
-  }
-  
-  if(parsecmd) {
-    parsecmd = false;
-    Serial.print("Command: ");
-    Serial.print(cmd);
-    Serial.print(" | ARG: ");
-    cmdArg = atoi(arg);
-    Serial.print(cmdArg);
-    Serial.print('\n');
-    processCommand();
-    cmd = '\0';
-    arg[0] = '\0';
-  }
-  
-}
-
+//COMMANDS
 char cmdTilt = 'T';
 char cmdPan = 'P';
 char cmdFood = 'F';
@@ -203,6 +167,13 @@ const int minVal = 0;
 
 int currentTilt = servoPTIni;
 int currentPan = servoPTIni;
+
+// protocol: cmd -> 1 byte | arg -> 3 bytes | '\n' -> 1byte = 5 bytes
+boolean processcmd = false;
+boolean parsecmd;
+char cmd;
+char arg[4];
+int cmdArg;
 
 void processCommand() {
   if(cmd == cmdTilt) {
@@ -246,6 +217,38 @@ void processCommand() {
     servoTilt.write(currentTilt);
   }
 }
+
+// Serial instruction
+
+void serialEvent() {
+  
+  if( Serial.available() >= 5) {
+    cmd = Serial.read();
+    arg[0] = (char)Serial.read();
+    arg[1] = (char)Serial.read();
+    arg[2] = (char)Serial.read();
+    arg[3] = '\0';
+    if(Serial.read() == '\n') {
+      parsecmd = true;
+    }
+  }
+  
+  if(parsecmd) {
+    parsecmd = false;
+    Serial.print("Command: ");
+    Serial.print(cmd);
+    Serial.print(" | ARG: ");
+    cmdArg = atoi(arg);
+    Serial.print(cmdArg);
+    Serial.print('\n');
+    processCommand();
+    cmd = '\0';
+    arg[0] = '\0';
+  }
+  
+}
+
+
 
 //LOOP
 void loop() 
