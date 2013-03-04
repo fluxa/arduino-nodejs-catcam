@@ -1,5 +1,6 @@
 script(type='text/javascript', src='/js/jquery-1.8.2.min.js')
 script(type='text/javascript', src='/js/bootstrap.min.js')
+script(type='text/javascript', src='/socket.io/socket.io.js')
 script(type='text/javascript')
 	alerts = function(){};
 	alerts.error = function(message){
@@ -15,4 +16,86 @@ script(type='text/javascript')
 			$('#alerts').html("<div class='alert alert-info fade in' onclick='$(\".alert\").alert(\"close\");'><button type='button' class='close' data-dismiss='alert'>×</button>"+message+"</div>");
 		}
 	}
+
+
+	//Sockets
+	
+	var socket;
+	var socketid;
+	var socketConnected = false;
+	var stepMultiplier = 10;
+
+	function onSendButton() {
+		sendCommand($('#data').val());
+		$('#data').val('');
+	}
+
+	function sendCommand(data) {
+		if (socketConnected) {
+			socket.emit('onSendCommand',data);
+			alerts.info('last command sent: ' + data); 
+		};
+	}
+
+	function sendStepCommand(cmd) {
+		var cmd = cmd + '0' + stepMultiplier.toString();
+		//alert(cmd);
+		sendCommand(cmd);
+	}
+
+	function setStepMultiplier(val) {
+		if (val < 100) {
+			stepMultiplier = val;
+		};
+		//alert(stepMultiplier);
+	}
+
+	function toggleUI(enabled) {
+
+	}
+
+	function socketConnect()
+	{
+		
+		if (!socketConnected) 
+		{
+			//connect socket
+			console.log("socket connect!");
+
+			if(!socket) //create socket
+			{
+				socket = io.connect();
+				socket.on('onConnect', function (data) {
+
+					socketConnected = true;
+					socketid = data.socketid;
+					toggleUI(true);
+
+					alerts.info('socket connected!');
+
+				});
+
+				socket.on('disconnect', function(data){
+					toggleUI(false);
+					socketConnected = false;
+					socketid = '';
+				});
+			}
+			else //reconnect
+			{
+				socket.socket.connect();
+			}
+			
+		}
+
+	}
+
+	//onready
+	$(function(){
+
+		socketConnect();
+
+
+	});
+
 

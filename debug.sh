@@ -1,1 +1,1 @@
-NODE_ENV=dev nodemon server.js
+nodemon server.js

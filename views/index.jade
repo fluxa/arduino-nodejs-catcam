@@ -1,24 +1,49 @@
 !!! 5
-html(lang='en',manifest='/cache.manifest')
+html(lang='en')
 	head
-		title #{title}
+		title #{name}
 		include inc/style
 	body
-		div#alerts
-		div#wrap
-			div.container
-				div.page-header
-					h1 #{title}
-					p.lead data will be sent via socket to node.js server then via serial to arduino
-
-				div#push
-					div.container
-						p
-							input(type='text')#data
-						p
-							a.btn.btn-primary(onclick='onSendButton();') send
-						
-		include inc/footer
-		include inc/scripts
-		include inc/scripts_index
+		div.container-narrow
+			div.masthead
+				h2 arduino-nodejs
+			hr
+			div.jumbotron
+				img(src='http://fluxa.bounceme.net:8080/videofeed')
+			hr
+			div.row-fluid
+				div.span8.offset3
+					div.span6
+						h2 Pan
+						a.btn.btn-success.btn-large(onclick="sendStepCommand('L');")
+							i.icon-arrow-left
+						a.btn.btn-success.btn-large(onclick="sendStepCommand('R');")
+							i.icon-arrow-right
+					div.span6
+						h2 Tilt
+						a.btn.btn-info.btn-large(onclick="sendStepCommand('U');")
+							i.icon-arrow-up
+						a.btn.btn-info.btn-large(onclick="sendStepCommand('D');")
+							i.icon-arrow-down
+				div
+					h2 Steps
+					div.btn-toolbar
+						a.btn.btn-warning(onclick="setStepMultiplier(10);") 1
+						a.btn.btn-warning(onclick="setStepMultiplier(20);") 2
+						a.btn.btn-warning(onclick="setStepMultiplier(30);") 3
+						a.btn.btn-warning(onclick="setStepMultiplier(40);") 4
+						a.btn.btn-warning(onclick="setStepMultiplier(50);") 5
+						a.btn.btn-warning(onclick="setStepMultiplier(60);") 6
+						a.btn.btn-warning(onclick="setStepMultiplier(70);") 7
+						a.btn.btn-warning(onclick="setStepMultiplier(80);") 8
+						a.btn.btn-warning(onclick="setStepMultiplier(90);") 9
+				div
+					h2 Food
+						div.btn-toolbar
+							a.btn.btn-danger(onclick="sendCommand('F170');") Open
+							a.btn.btn-success(onclick="sendCommand('F000');") Close
+				
+			div#alerts
+			include inc/footer
+			include inc/scripts
 

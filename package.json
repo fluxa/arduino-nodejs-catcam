@@ -1,12 +1,12 @@
 {
-  "name": "arduino-nodejs",
+  "name": "arduinode",
   "version": "1.0.0",
   "private":true,
   "dependencies": {
     "express": "",
-    "socket.io":"",
     "jade":"",
     "stylus":"",
+    "socket.io":"",
     "serialport":""
   }
 }
