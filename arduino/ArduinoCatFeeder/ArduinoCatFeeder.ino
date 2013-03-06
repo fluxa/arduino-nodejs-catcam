@@ -72,10 +72,10 @@ void feed()
   servoFood.write(foodOpen);
   delay(waitTimeForClosing);
   servoFood.write(foodClosed);
-  delay(waitTimeForClosing);
-  servoFood.write(foodOpen);
-  delay(waitTimeForClosing);
-  servoFood.write(foodClosed);
+  //delay(waitTimeForClosing);
+  //servoFood.write(foodOpen);
+  //delay(waitTimeForClosing);
+  //servoFood.write(foodClosed);
   
 }
 
