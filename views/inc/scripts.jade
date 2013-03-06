@@ -17,6 +17,18 @@ script(type='text/javascript')
 		}
 	}
 
+	function controls(cmd) {
+		if(cmd == 'open'){
+			$('#controls').html("<iframe id='controls-iframe' src='http://fluxa.bounceme.net:8080/remote.html'/>");
+		} else if(cmd == 'close') {
+			var c = $('#controls-iframe')[0];
+			if(c) {
+				c.parentNode.removeChild(c);
+				c = null;
+			}
+		}
+	}
+
 
 	//Sockets
 	

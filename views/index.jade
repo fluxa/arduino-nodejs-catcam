@@ -5,6 +5,7 @@ html(lang='en')
 		include inc/style
 	body
 		div.container-narrow
+			div#alerts
 			div.masthead
 				h2 arduino-nodejs
 			hr
@@ -42,8 +43,13 @@ html(lang='en')
 						div.btn-toolbar
 							a.btn.btn-danger(onclick="sendCommand('F170');") Open
 							a.btn.btn-success(onclick="sendCommand('F000');") Close
-				
-			div#alerts
+				div
+					h2 Controls
+						div.btn-toolbar
+							a.btn.btn-success(onclick="controls('open')") Open
+							a.btn.btn-danger(onclick="controls('close')") Close
+						div#controls
+
 			include inc/footer
 			include inc/scripts
 
