@@ -32,7 +32,7 @@ client.get(presetsHash,function(err,reply){
     try{
       presetsData = JSON.parse(reply);
     } catch(e) {
-      presetsData = JSON.stringify(presetDefault);
+      presetsData = presetDefault;
     }
     console.log("redis data: " + presetsData);
   }
