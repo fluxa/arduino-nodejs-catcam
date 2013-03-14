@@ -80,10 +80,14 @@ script(type='text/javascript')
 			//save data
 			socket.emit('onRedisData',presetsData);
 		} else {
-			//alert('P'+presetsData[index][0].toString());
-			//alert('T'+presetsData[index][1].toString());
-			sendCommand('P'+presetsData[index][0].toString());
-			sendCommand('T'+presetsData[index][1].toString());
+			
+			var pVal = presetsData[index][0];
+			var tVal = presetsData[index][1];
+			var pSanit = (pVal >= 10) ? ( (pVal < 100) ? '0'+pVal.toString() : pVal.toString() ) : '00'+pVal.toString();
+			var tSanit = (tVal >= 10) ? ( (tVal < 100) ? '0'+tVal.toString() : tVal.toString() ) : '00'+tVal.toString();
+			
+			sendCommand('P'+pSanit);
+			sendCommand('T'+tSanit);
 		}
 	}
 
