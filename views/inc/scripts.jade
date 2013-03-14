@@ -123,15 +123,19 @@ script(type='text/javascript')
 			case "L":
 				currentPanValue -= stepMultiplier;
 				if(currentPanValue < 0) currentPanValue = 0;
+				break;
 			case "R":
 				currentPanValue += stepMultiplier;
 				if(currentPanValue > 160) currentPanValue = 160;
+				break;
 			case "U":
 				currentTiltValue += stepMultiplier;
 				if(currentTiltValue > 160) currentTiltValue = 160;
+				break;
 			case "D":
 				currentTiltValue -= stepMultiplier;
 				if(currentTiltValue < 0) currentTiltValue = 0;
+				break;
 		}
 	}
 
