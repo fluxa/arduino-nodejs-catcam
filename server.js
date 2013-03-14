@@ -34,6 +34,7 @@ client.get(presetsHash,function(err,reply){
     } catch(e) {
       presetsData = presetDefault;
     }
+    if(presetsData == null) presetsData = presetDefault;
     console.log("redis data: " + presetsData);
   }
 });
