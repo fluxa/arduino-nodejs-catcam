@@ -7,6 +7,8 @@
     "jade":"",
     "stylus":"",
     "socket.io":"",
-    "serialport":""
+    "serialport":"",
+    "redis":"",
+    "hiredis":""
   }
 }

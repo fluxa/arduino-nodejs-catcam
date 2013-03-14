@@ -30,8 +30,13 @@ script(type='text/javascript')
 	}
 
 
+	//Variables
+	var presetsData = null,
+		currentPanValue = 100, //default
+		currentTiltValue = 100,
+		isPickingPreset = false;
+
 	//Sockets
-	
 	var socket;
 	var socketid;
 	var socketConnected = false;
@@ -50,6 +55,7 @@ script(type='text/javascript')
 	}
 
 	function sendStepCommand(cmd) {
+		updateLocalValue(cmd);
 		var cmd = cmd + '0' + stepMultiplier.toString();
 		//alert(cmd);
 		sendCommand(cmd);
@@ -64,6 +70,62 @@ script(type='text/javascript')
 
 	function toggleUI(enabled) {
 
+	}
+
+	//presets
+	function onPreset(index) {
+		if(isPickingPreset) {
+			presetsData[index] = [currentPanValue,currentTiltValue];
+			isPickingPreset = false;
+			//save data
+			socket.emit('onRedisData',presetsData);
+		} else {
+			//alert('P'+presetsData[index][0].toString());
+			//alert('T'+presetsData[index][1].toString());
+			sendCommand('P'+presetsData[index][0].toString());
+			sendCommand('T'+presetsData[index][1].toString());
+		}
+	}
+
+	function onPresetPick() {
+		isPickingPreset = true;
+		var blinkInterval = 0;
+		blinkInterval = setInterval(function(){
+			$('.presetbt').each(function(index,elem){
+
+				if(!isPickingPreset) { //back to normal
+					$(elem).removeClass('btn-warning').addClass('btn-info');
+					clearInterval(blinkInterval);
+					blinkInterval = null;
+					return;
+				}
+
+				//blink
+				if($(elem).hasClass('btn-info')){
+					$(elem).removeClass('btn-info').addClass('btn-warning');
+				} else {
+					$(elem).removeClass('btn-warning').addClass('btn-info');
+				}
+			});
+
+		},500);
+	}
+
+	function updateLocalValue(cmd) {
+		switch(cmd) {
+			case "L":
+				currentPanValue -= stepMultiplier;
+				if(currentPanValue < 0) currentPanValue = 0;
+			case "R":
+				currentPanValue += stepMultiplier;
+				if(currentPanValue > 160) currentPanValue = 160;
+			case "U":
+				currentTiltValue += stepMultiplier;
+				if(currentTiltValue > 160) currentTiltValue = 160;
+			case "D":
+				currentTiltValue -= stepMultiplier;
+				if(currentTiltValue > 0) currentTiltValue = 0;
+		}
 	}
 
 	function socketConnect()
@@ -91,6 +153,11 @@ script(type='text/javascript')
 					toggleUI(false);
 					socketConnected = false;
 					socketid = '';
+				});
+
+				socket.on('redisData', function(data){
+					presetsData = data.data;
+					alerts.info('redis data ready!');
 				});
 			}
 			else //reconnect

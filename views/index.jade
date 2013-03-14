@@ -14,13 +14,21 @@ html(lang='en')
 			hr
 			div.row-fluid
 				div.span8.offset3
-					div.span6
+					div.span4
+						h2 Presets
+						a.btn.btn-info.btn-large(onclick="onPreset(0);").presetbt 1
+						a.btn.btn-info.btn-large(onclick="onPreset(1);").presetbt 2
+						a.btn.btn-info.btn-large(onclick="onPreset(2);").presetbt 3
+						a.btn.btn-info.btn-large(onclick="onPreset(3);").presetbt 4
+						a.btn.btn-danger.btn-large(onclick="onPresetPick();")
+							i.icon-facetime-video
+					div.span4
 						h2 Pan
 						a.btn.btn-success.btn-large(onclick="sendStepCommand('L');")
 							i.icon-arrow-left
 						a.btn.btn-success.btn-large(onclick="sendStepCommand('R');")
 							i.icon-arrow-right
-					div.span6
+					div.span4
 						h2 Tilt
 						a.btn.btn-info.btn-large(onclick="sendStepCommand('U');")
 							i.icon-arrow-up
